@@ -7,34 +7,24 @@
 // function visNavne(elm, i) {
 //   section.innerHTML += `<p>${elm} er sød ${i}</p>`;
 // }
+const endpoint = "https://kea-alt-del.dk/t7/api/products?start=43800&limit=25";
 
-const biler = [
-  {
-    pris: 23000,
-    model: "turbo",
-    brand: "lada",
-    farve: "orange",
-    udstyr: ["rat", "sæder", "vinduer"],
-  },
-  {
-    pris: 243000,
-    model: "turbo",
-    brand: "toyota",
-    farve: "grøn",
-    udstyr: ["rat", "sæder", "vinduer", "autopilot"],
-  },
-];
-console.log(biler);
+fetch(endpoint)
+  .then((res) => res.json())
+  .then(visData);
+
+function visData(json) {
+  console.log(json);
+  json.forEach((element) => {
+    produktliste.innerHTML += `<article class="card">
+    <img src=https://kea-alt-del.dk/t7/images/webp/640/${element.id}.webp alt="produktbillede"/>
+        <h2>${element.productdisplayname}</h2>
+        <h3>${element.gender}</h3>
+         <p>${element.season}</p>
+        <p>${element.price} kr,-</p>
+        <p>${element.brandname}</p>
+      </article>`;
+  });
+}
 
 const produktliste = document.querySelector(".produktliste");
-
-biler.forEach(visBiler);
-
-function visBiler(bil) {
-  produktliste.innerHTML += `<article class="card">
-        <h2>${bil.brand}</h2>
-        <h3>${bil.model}</h3>
-        <p>${bil.pris}</p>
-        <p>${bil.farve}</p>
-      </article>`;
-}
